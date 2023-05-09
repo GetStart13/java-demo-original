@@ -1,4 +1,4 @@
-package testTemp;
+package test_temp;
 
 
 public interface Test1<V> {

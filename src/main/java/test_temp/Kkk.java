@@ -1,4 +1,4 @@
-package testTemp;
+package test_temp;
 
 @FunctionalInterface
 public interface Kkk<T> {

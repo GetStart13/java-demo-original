@@ -1,4 +1,4 @@
-package java_Login;
+package scanner;
 
 import java.util.Scanner;
 

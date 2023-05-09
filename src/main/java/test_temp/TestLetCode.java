@@ -1,4 +1,4 @@
-package testTemp;
+package test_temp;
 
 public class TestLetCode {
     public static void main(String[] args) {

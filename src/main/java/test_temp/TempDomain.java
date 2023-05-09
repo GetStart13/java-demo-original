@@ -1,4 +1,4 @@
-package testTemp;
+package test_temp;
 
 public class TempDomain {
     private int intType;
