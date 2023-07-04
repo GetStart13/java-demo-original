@@ -6,13 +6,13 @@ public class Login {
     public static void main(String[] args) {
         String username = "godlike";
         String password = "123";
-        Scanner sc = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         int i = 3;
         while (i > 0) {
             System.out.println("请输入用户名：");
-            String name = sc.nextLine();
+            String name = scanner.nextLine();
             System.out.println("请输入密码：");
-            String pws = sc.nextLine();
+            String pws = scanner.nextLine();
             i--;
             if (name.equals(username) && pws.equals(password)) {
                 System.out.println("登陆成功!");

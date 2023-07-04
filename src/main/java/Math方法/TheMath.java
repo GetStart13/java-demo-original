@@ -1,5 +1,7 @@
 package Math方法;
 
+import java.util.Random;
+
 public class TheMath {
     public static void main(String[] args) {
         //返回参数的绝对值：
@@ -23,19 +25,19 @@ public class TheMath {
         System.out.println("-----------");
 
         //返回两个数中的较大值
-        System.out.println(Math.max(12,34));
+        System.out.println(Math.max(12, 34));
         System.out.println("-----------");
 
         //返回两个数中较小值：
-        System.out.println(Math.min(12,34));
+        System.out.println(Math.min(12, 34));
         System.out.println("-----------");
 
         //返回a的b次幂的值
-        System.out.println(Math.pow(2.0,3.0));
+        System.out.println(Math.pow(2.0, 3.0));
         System.out.println("-----------");
 
         //随机数，返回值为double的正值，范围：0.0 - 1.0
-        System.out.println((int)(Math.random()*100));
+        System.out.println(new Random().nextInt() * 100);
         System.out.println("-----------");
 
     }

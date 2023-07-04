@@ -12,18 +12,45 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
+/**
+ * <p> 2023/5/17 </p>
+ * 步骤：
+ * <br> 1、构建 URL 对象，打开连接
+ * <br> 2、（GET 请求可忽略）设置请求方法、设置请求属性（请求头）、设置 URL 写出为 true、写入请求体参数
+ * <br> 3、读取请求响应，读取输入流
+ * <br> 4、关闭连接
+ *
+ * @author Fqq
+ */
 public class MyHttpClient {
 
+    /**
+     * Http 连接
+     */
     private final HttpURLConnection connection;
 
+    /**
+     * 构建 GET httpClient 并建立连接
+     *
+     * @param url    URL
+     * @param params 参数
+     */
     private MyHttpClient(String url, Map<String, String> params) throws IOException {
         connection = buildConnection(url, params);
     }
 
+    /**
+     * 构建 POST httpClient 并建立连接
+     *
+     * @param url      URL
+     * @param params   路径参数
+     * @param jsonBody 请求体参数
+     */
     private MyHttpClient(String url, Map<String, String> params, String jsonBody) throws IOException {
         connection = buildConnection(url, params);
         connection.setRequestMethod("POST");
         connection.setRequestProperty("Content-Type", "application/json;charset=utf-8");
+        // 允许连接写出数据，也可以允许连接写入数据：connection.setDoInput(true);。
         connection.setDoOutput(true);
 
         try (DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream())) {
@@ -32,10 +59,25 @@ public class MyHttpClient {
         }
     }
 
+    /**
+     * 发送 GET 请求
+     *
+     * @param url    URL
+     * @param params 请求参数
+     * @return 自定义 http 客户端
+     */
     public static MyHttpClient get(String url, Map<String, String> params) throws IOException {
         return new MyHttpClient(url, params);
     }
 
+    /**
+     * 发送 post 请求
+     *
+     * @param url      URL
+     * @param params   请求参数
+     * @param jsonBody 请求体
+     * @return 自定义客户端
+     */
     public static MyHttpClient post(String url, Map<String, String> params, String jsonBody) throws IOException {
         return new MyHttpClient(url, params, jsonBody);
     }
