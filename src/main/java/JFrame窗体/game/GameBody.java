@@ -19,8 +19,9 @@ import java.util.Random;
  */
 public class GameBody extends JFrame implements KeyListener {
 
-    int border = 255;
-    List<TheLabel> labels = new ArrayList<>();
+    private static final int BORDER = 255;
+    private final List<TheLabel> labels = new ArrayList<>();
+    private final Random random = new Random();
 
     public GameBody() {
         mainFrame();
@@ -28,30 +29,31 @@ public class GameBody extends JFrame implements KeyListener {
 
     public void mainFrame() {
 
-        this.setTitle("TheGame： ← ↑ → ↓ 移动空白方格，回车键刷新游戏！");//设置题目
-        this.setSize(1020, 1030);//设置宽高
+        this.setTitle("TheGame： ← ↑ → ↓ 移动空白方格，回车键刷新游戏！"); // 设置标题
+        this.setSize(1020, 1030); // 设置宽高
         this.setResizable(false);//禁用自定义调整大小
         this.setAlwaysOnTop(true);//设置总是显示在第一层窗口
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//设置关闭按钮
-        this.setBackground(new Color(96, 159, 200));//设置背景颜色
-        this.setLocationRelativeTo(null);//设置相对位置，空为居中
-        this.setLayout(null);//取消默认布局
-        this.addKeyListener(this);//键盘监听
-        //存取拼图对象
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); // 设置关闭按钮
+        this.setBackground(new Color(96, 159, 200)); // 设置背景颜色
+        this.setLocationRelativeTo(null); // 设置相对位置，空为居中
+        this.setLayout(null); // 取消默认布局
+        this.addKeyListener(this); // 键盘监听
+        // 存取拼图对象
         for (int i = 0; i < 16; i++) {
-            TheLabel theLabel = new TheLabel(i, border);
+            TheLabel theLabel = new TheLabel(i, BORDER);
             this.getContentPane().add(theLabel);
             labels.add(theLabel);
         }
 
-        //打乱拼图
+        // 打乱拼图
         refresh();
 
-        this.setVisible(true);//设置窗体可见
+        this.setVisible(true); // 设置窗体可见
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
+        // TODO document why this method is empty
     }
 
     @Override
@@ -88,7 +90,7 @@ public class GameBody extends JFrame implements KeyListener {
         // 拼图是否还原
         boolean flag = false;
         for (TheLabel label : labels) {
-            if (label.getXx() == label.getId() % 4 * border && label.getYy() == label.getId() / 4 * border) {
+            if (label.getXx() == label.getId() % 4 * BORDER && label.getYy() == label.getId() / 4 * BORDER) {
                 flag = true;
             } else {
                 flag = false;
@@ -121,7 +123,7 @@ public class GameBody extends JFrame implements KeyListener {
         if (labels.get(0).getXx() > 0) {
             int temp = labels.get(0).getXx();
             for (TheLabel label : labels) {
-                if (label.getXx() == labels.get(0).getXx() - border && label.getYy() == labels.get(0).getYy()) {
+                if (label.getXx() == labels.get(0).getXx() - BORDER && label.getYy() == labels.get(0).getYy()) {
                     labels.get(0).setXx(label.getXx());
                     label.setXx(temp);
                     label.newXY();
@@ -135,7 +137,7 @@ public class GameBody extends JFrame implements KeyListener {
         if (labels.get(0).getYy() > 0) {
             int temp = labels.get(0).getYy();
             for (TheLabel label : labels) {
-                if (label.getYy() == labels.get(0).getYy() - border && label.getXx() == labels.get(0).getXx()) {
+                if (label.getYy() == labels.get(0).getYy() - BORDER && label.getXx() == labels.get(0).getXx()) {
                     labels.get(0).setYy(label.getYy());
                     label.setYy(temp);
                     label.newXY();
@@ -146,10 +148,10 @@ public class GameBody extends JFrame implements KeyListener {
     }
 
     public void right() {
-        if (labels.get(0).getXx() < border * 3) {
+        if (labels.get(0).getXx() < BORDER * 3) {
             int temp = labels.get(0).getXx();
             for (TheLabel label : labels) {
-                if (label.getXx() == labels.get(0).getXx() + border && label.getYy() == labels.get(0).getYy()) {
+                if (label.getXx() == labels.get(0).getXx() + BORDER && label.getYy() == labels.get(0).getYy()) {
                     labels.get(0).setXx(label.getXx());
                     label.setXx(temp);
                     label.newXY();
@@ -160,10 +162,10 @@ public class GameBody extends JFrame implements KeyListener {
     }
 
     public void down() {
-        if (labels.get(0).getYy() < border * 3) {
+        if (labels.get(0).getYy() < BORDER * 3) {
             int temp = labels.get(0).getYy();
             for (TheLabel label : labels) {
-                if (label.getYy() == labels.get(0).getYy() + border && label.getXx() == labels.get(0).getXx()) {
+                if (label.getYy() == labels.get(0).getYy() + BORDER && label.getXx() == labels.get(0).getXx()) {
                     labels.get(0).setYy(label.getYy());
                     label.setYy(temp);
                     label.newXY();
@@ -173,9 +175,8 @@ public class GameBody extends JFrame implements KeyListener {
         }
     }
 
-    //打乱拼图
+    // 打乱拼图
     public void refresh() {
-        Random random = new Random();
         int changeTimes = 100;
         while (changeTimes > 0) {
             int i = random.nextInt(4);
@@ -195,7 +196,7 @@ public class GameBody extends JFrame implements KeyListener {
             }
             --changeTimes;
         }
-        //空白拼图格子回到左上角
+        // 空白拼图格子回到左上角
         while (labels.get(0).getXx() != 0 || labels.get(0).getYy() != 0) {
             upward();
             left();

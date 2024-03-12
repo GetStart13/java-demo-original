@@ -4,6 +4,10 @@ public class Parent implements Root {
 
     public String parent;
 
+    public Parent() {
+        System.out.println("============= 父类被初始化 =============");
+    }
+
     public String getParent() {
         return parent;
     }
@@ -15,5 +19,4 @@ public class Parent implements Root {
     public void priority() {
         System.out.println("parent");
     }
-
 }

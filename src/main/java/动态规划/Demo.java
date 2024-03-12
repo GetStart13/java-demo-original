@@ -30,7 +30,7 @@ public class Demo {
                 }
             }
             // 如果该数值（x）的集合长度不为空，则说明它可以由这些硬币拼成这个面值
-            if (list.size() >= 1) {
+            if (!list.isEmpty()) {
                 // 取最小的硬币数作为该数值的解
                 g[i] = Collections.min(list);
             }

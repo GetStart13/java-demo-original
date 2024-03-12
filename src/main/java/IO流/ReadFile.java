@@ -26,7 +26,7 @@ import java.util.stream.Stream;
 public class ReadFile {
     private static final String PROJECT_DIR = System.getProperty("user.dir");
     private static final String FILE_OF_TXT = PROJECT_DIR + "\\img\\IO.txt";
-    private static final String IMG = "./img";
+    private static final String IMG_PATH = "./img";
 
     public static void main(String[] args) {
         ReadFile demo = new ReadFile();
@@ -35,8 +35,8 @@ public class ReadFile {
         demo.readAllBytes();
         demo.readDirectoryOfFiles();
         demo.directoryStreamJDK8();
-        demo.depthDirectory(2);
-        demo.listFilesUsingFileWalkAndVisitor(IMG);
+        demo.depthDirectory();
+        demo.listFilesUsingFileWalkAndVisitor();
     }
 
     /**
@@ -45,7 +45,7 @@ public class ReadFile {
     void readOneLine() {
         try {
             try (Stream<String> lines = Files.lines(Paths.get(FILE_OF_TXT))) {
-                lines.forEach(v -> System.out.println(v));
+                lines.forEach(System.out::println);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -86,7 +86,7 @@ public class ReadFile {
      */
     @Deprecated
     void readDirectoryOfFiles() {
-        File directory = new File(IMG);
+        File directory = new File(IMG_PATH);
         File[] files = directory.listFiles();
         Objects.requireNonNull(files);
         for (File file : files) {
@@ -99,7 +99,7 @@ public class ReadFile {
      */
     void directoryStreamJDK8() {
         try {
-            try (Stream<Path> list = Files.list(Paths.get(IMG))) {
+            try (Stream<Path> list = Files.list(Paths.get(IMG_PATH))) {
                 list
                         .filter(d -> !Files.isDirectory(d))
                         .forEach(path -> {
@@ -115,13 +115,14 @@ public class ReadFile {
     /**
      * 深度遍历文件夹内容
      */
-    void depthDirectory(int depth) {
+    void depthDirectory() {
+        int maxDepth = 2;
         try {
-            try (Stream<Path> walk = Files.walk(Paths.get(IMG), depth)) {
+            try (Stream<Path> walk = Files.walk(Paths.get(IMG_PATH), maxDepth)) {
                 Set<String> collect = walk
                         .filter(path -> !Files.isDirectory(path))
-                        .map(path -> path.getFileName())
-                        .map(path -> path.toString())
+                        .map(Path::getFileName)
+                        .map(Path::toString)
                         .collect(Collectors.toSet());
                 System.out.println(collect);
             }
@@ -133,10 +134,10 @@ public class ReadFile {
     /**
      * 遍历文件夹做一些操作，使用 walkFileTree
      */
-    void listFilesUsingFileWalkAndVisitor(String dir) {
+    void listFilesUsingFileWalkAndVisitor() {
         try {
             Set<String> fileList = new HashSet<>();
-            Files.walkFileTree(Paths.get(dir), new SimpleFileVisitor<>() {
+            Files.walkFileTree(Paths.get(ReadFile.IMG_PATH), new SimpleFileVisitor<>() {
                 @Override
                 public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
                     if (!Files.isDirectory(file)) {

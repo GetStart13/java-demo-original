@@ -1,21 +1,22 @@
 package test_temp;
 
 
-import java.util.Optional;
-import java.util.Random;
-
 public class TempDemo {
     public static void main(String[] args) {
-        String command = "command:$REQUEST,2,6\r\n";
-        String content = Optional.ofNullable(command)
-                .map(s -> s.substring(s.lastIndexOf(",")+1))
-                .map(String::trim)
-                .orElse("");
-        System.out.println(content);
-        Integer integer = new Random().nextInt(10) * 10;
-        System.out.println(integer);
-        double nextDouble = new Random().nextDouble(10);
-        System.out.println(Double.toString(nextDouble).substring(0, 3));
+        int count = 0;
+        for (float y = 2.5F; y > -2.0F; y -= 0.12F) {
+            for (float x = -2.3F; x < 2.3F; x += 0.041F) {
+                float a = x * x + y * y - 4F;
+                if ((a * a * a - x * x * y * y * y) < 0.0F) {
+                    String str = "I love you!";
+                    int num = count % str.length();
+                    System.err.print(str.charAt(num));
+                    count++;
+                } else {
+                    System.err.print(" ");
+                }
+            }
+            System.err.println();
+        }
     }
-
 }

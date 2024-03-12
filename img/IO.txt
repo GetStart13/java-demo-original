@@ -1,0 +1,3 @@
+this is input / output stream
+第二行数据
+第三行数据

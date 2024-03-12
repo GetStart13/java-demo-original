@@ -3,7 +3,7 @@ package 枚举;
 import java.util.EnumMap;
 
 /**
- *
+ * 枚举的声明与方法中的变量声明具有同样性质，在枚举中引用后声明的枚举常量或自引用将不能通过编译，因为仍未初始化
  */
 public enum Week {
     MONDAY(1, "星期一"),
