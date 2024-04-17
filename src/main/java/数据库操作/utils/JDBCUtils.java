@@ -3,68 +3,56 @@ package 数据库操作.utils;
 import com.alibaba.druid.pool.DruidDataSourceFactory;
 
 import javax.sql.DataSource;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
-/*连接池工具类*/
+/**
+ * <p> 2024/4/17 </p>
+ * 连接池工具类
+ *
+ * @author Fqq
+ */
 public class JDBCUtils {
-    //1.定义成员变量
-    private static DataSource ds;
+    private JDBCUtils() {
+    }
 
-    static {
-        try {
-            //1.1加载配置文件
-            Properties pro = new Properties();
-            pro.load(JDBCUtils.class.getClassLoader().getResourceAsStream("数据库操作/druid.properties"));
-            //2.获取 DataSource 对象
-            ds = DruidDataSourceFactory.createDataSource(pro);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
+    // 定义数据源静态成员变量
+    private static DataSource dataSource;
+
+    private static void createDatasource() throws Exception {
+        // 加载配置文件
+        Properties properties = new Properties();
+        properties.load(JDBCUtils.class.getClassLoader().getResourceAsStream("mysql-config.properties"));
+        // 获取 DataSource 对象
+        dataSource = DruidDataSourceFactory.createDataSource(properties);
+    }
+
+    // 获取连接
+    public static Connection getConnection() throws Exception {
+        if (dataSource == null) {
+            createDatasource();
+        }
+        return dataSource.getConnection();
+    }
+
+    // 关闭连接
+    public static void close(ResultSet resultSet, Statement statement, Connection connection) throws SQLException {
+        if (resultSet != null) {
+            resultSet.close();
+        }
+        if (statement != null) {
+            statement.close();
+        }
+        if (connection != null) {
+            connection.close();
         }
     }
 
-    //3.获取连接
-    public static Connection getConnection() throws SQLException {
-        return ds.getConnection();
-    }
-
-    //3.释放连接
-    public static void close(Statement stmt, Connection conn) {
-        close(null, stmt, conn);
-    }
-
-    public static void close(ResultSet rs, Statement stmt, Connection conn) {
-        if (rs != null) {
-            try {
-                rs.close();//归还连接
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        if (stmt != null) {
-            try {
-                stmt.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        if (conn != null) {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    //获取连接池方法
+    // 获取数据源
     public static DataSource getDatasource() {
-        return ds;
+        return dataSource;
     }
 }

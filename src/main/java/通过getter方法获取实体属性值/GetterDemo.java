@@ -1,6 +1,7 @@
 package 通过getter方法获取实体属性值;
 
-import 学生信息管理系统.Student;
+
+import 数据库操作.entity.Student;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;

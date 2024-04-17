@@ -25,7 +25,7 @@ import java.util.stream.Stream;
  */
 public class ReadFile {
     private static final String PROJECT_DIR = System.getProperty("user.dir");
-    private static final String FILE_OF_TXT = PROJECT_DIR + "\\img\\IO.txt";
+    private static final String FILE_PATH = PROJECT_DIR + "\\img\\IO.txt";
     private static final String IMG_PATH = "./img";
 
     public static void main(String[] args) {
@@ -44,7 +44,7 @@ public class ReadFile {
      */
     void readOneLine() {
         try {
-            try (Stream<String> lines = Files.lines(Paths.get(FILE_OF_TXT))) {
+            try (Stream<String> lines = Files.lines(Paths.get(FILE_PATH))) {
                 lines.forEach(System.out::println);
             }
         } catch (IOException e) {
@@ -57,7 +57,7 @@ public class ReadFile {
      */
     void bufferReader() {
         try {
-            try (BufferedReader bufferedReader = new BufferedReader(new FileReader(FILE_OF_TXT))) {
+            try (BufferedReader bufferedReader = new BufferedReader(new FileReader(FILE_PATH))) {
                 String line;
                 while ((line = bufferedReader.readLine()) != null) {
                     System.out.println(line);
@@ -73,7 +73,7 @@ public class ReadFile {
      */
     void readAllBytes() {
         try {
-            byte[] bytes = Files.readAllBytes(Paths.get(FILE_OF_TXT));
+            byte[] bytes = Files.readAllBytes(Paths.get(FILE_PATH));
             String content = new String(bytes, StandardCharsets.UTF_8);
             System.out.println(content);
         } catch (IOException e) {
@@ -100,12 +100,11 @@ public class ReadFile {
     void directoryStreamJDK8() {
         try {
             try (Stream<Path> list = Files.list(Paths.get(IMG_PATH))) {
-                list
-                        .filter(d -> !Files.isDirectory(d))
-                        .forEach(path -> {
-                            System.out.println(path);
-                            System.out.println(path.getFileName().toString());
-                        });
+                list.filter(d -> !Files.isDirectory(d))
+                    .forEach(path -> {
+                        System.out.println(path);
+                        System.out.println(path.getFileName().toString());
+                    });
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -119,8 +118,8 @@ public class ReadFile {
         int maxDepth = 2;
         try {
             try (Stream<Path> walk = Files.walk(Paths.get(IMG_PATH), maxDepth)) {
-                Set<String> collect = walk
-                        .filter(path -> !Files.isDirectory(path))
+                Set<String> collect =
+                    walk.filter(path -> !Files.isDirectory(path))
                         .map(Path::getFileName)
                         .map(Path::toString)
                         .collect(Collectors.toSet());

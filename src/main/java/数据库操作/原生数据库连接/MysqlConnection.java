@@ -22,19 +22,14 @@ public class MysqlConnection {
             connection = DriverManager.getConnection(driver, "root", "123456");
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
-            System.out.println("+-   id   -+" + "- username -+" + "-         email         -+"
-                    + "- password -+" + "-   num   -+");
             while (resultSet.next()) {
                 String one = resultSet.getString(1);
                 String two = resultSet.getString(2);
                 String three = resultSet.getString(3);
                 String four = resultSet.getString(4);
                 String five = resultSet.getString(5);
-                System.out.print("| " + one + "        |");
-                System.out.print(" " + two + addEmpty(two, 11));
-                System.out.print(" " + three + addEmpty(three, 24));
-                System.out.print(" " + four + addEmpty(four, 11));
-                System.out.println(" " + five + addEmpty(five, 10));
+                System.out.printf("column1: %s, column2: %s, column3: %s, column4: %s, column5: %s%n",
+                    one, two, three, four, five);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -63,26 +58,5 @@ public class MysqlConnection {
             }
         }
 
-    }
-
-    /**
-     * 填补空格，更好看
-     * str：传入字符串
-     * amount：指定的字符串字符数量
-     */
-    private static String addEmpty(String str, int amount) {
-
-        int length = 0;
-        if (str != null) { // 如果参数不为空，获取长度
-            length = str.length();
-        }
-        if (str != null && str.charAt(str.length() - 1) > 256) { // 如果是中文，对填补做出修改
-            length += 2;
-        }
-        if (str == null) { // 如果为空，对填补做出修改
-            length += 4;
-        }
-        StringBuilder string = new StringBuilder("                            ");
-        return string.substring(length, amount) + "|";
     }
 }
