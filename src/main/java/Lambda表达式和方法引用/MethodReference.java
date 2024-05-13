@@ -20,9 +20,11 @@ public class MethodReference {
             return new Class[0];
         }
     }
+
+    @FunctionalInterface
+    interface MyFunction<T, R> {
+        R apply(T t);
+    }
 }
 
-@FunctionalInterface
-interface MyFunction<T, R> {
-    R apply(T t);
-}
+

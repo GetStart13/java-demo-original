@@ -11,15 +11,20 @@ import java.lang.invoke.SerializedLambda;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+/**
+ * <p> 2024/5/13 </p>
+ *
+ * @author Fqq
+ */
 public class GetterDemo {
     public static void main(String[] args) {
-        testIntrospector();
-        testGetOne();
+        introspectorTest();
+        propertyGetTest();
         String name = extractName(User::getName);
         System.out.println(name);
     }
 
-    static void testIntrospector() {
+    static void introspectorTest() {
         try {
             Student student = new Student();
             student.setName("myName");
@@ -28,8 +33,8 @@ public class GetterDemo {
             for (PropertyDescriptor propertyDescriptor : propertyDescriptors) {
                 if (!"class".equals(propertyDescriptor.getName())) {
                     Method readMethod = propertyDescriptor.getReadMethod();
-                    Object invoke = readMethod.invoke(student);
-                    System.out.println(invoke);
+                    Object methodValue = readMethod.invoke(student);
+                    System.out.println(methodValue);
                 }
             }
         } catch (IntrospectionException | InvocationTargetException | IllegalAccessException e) {
@@ -40,13 +45,13 @@ public class GetterDemo {
     /**
      * 通过 PropertyDescriptor 传入属性名来获取属性的读写方法
      */
-    static void testGetOne() {
+    static void propertyGetTest() {
         try {
             Student student = new Student();
             student.setName("stu");
-            PropertyDescriptor descriptor = new PropertyDescriptor("name", Student.class);
-            Object invoke = descriptor.getReadMethod().invoke(student);
-            System.out.println(invoke);
+            PropertyDescriptor methodDescriptor = new PropertyDescriptor("name", Student.class);
+            Object methodValue = methodDescriptor.getReadMethod().invoke(student);
+            System.out.println(methodValue);
         } catch (IntrospectionException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }

@@ -6,7 +6,10 @@ import java.nio.file.FileSystems;
 import java.nio.file.Paths;
 
 /**
+ * <p> 2024/5/13 </p>
  * 获取项目根路径的方法
+ *
+ * @author Fqq
  */
 public class GetProjectPathDemo {
     public static void main(String[] args) {

@@ -1,3 +1,3 @@
-className=反射.反射运行配置文件指定内容.Teacher
+className=反射.实体类.Teacher
 methodName=teach
 NameAndAge=周明,33

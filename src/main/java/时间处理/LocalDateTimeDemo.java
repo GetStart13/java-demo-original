@@ -25,11 +25,11 @@ public class LocalDateTimeDemo {
         LocalDateTime now = LocalDateTime.now();
         // 转系统默认时区
         ZonedDateTime zonedDateTime = now.atZone(ZoneId.systemDefault());
-        // 转成时间戳，然后根据 1970 年代转成秒
+        // 转成时间戳，然后转成秒（1970 至今）
         long convertToMillis = zonedDateTime.toInstant().toEpochMilli();
         System.out.println(convertToMillis);
 
-        // 与系统时间比较
+        // 查看系统时间
         long currentTimeMillis = System.currentTimeMillis();
         System.out.println(currentTimeMillis);
     }

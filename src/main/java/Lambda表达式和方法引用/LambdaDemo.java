@@ -6,10 +6,10 @@ public class LambdaDemo {
     public static void main(String[] args) {
         String msg = "周明,23";
 
-        /* 此处定义 lambda 表达式的方法体，在 change 方法中，fun1 和 fun2 的 apply 方法逻辑来自此处，
-           但它们的实参来自 change 方法内部，这类似于 javascript 的回调函数 */
+        // !!! Lambda 表达式本质是将一个方法体作为参数传递 !!!
+        // 此处定义 lambda 表达式的方法体，在 change 方法中，fun1 和 fun2 的 apply 方法逻辑来自此处，
+        // 但它们的实参来自 change 方法内部，这类似于 javascript 的回调函数
         change(msg, firstConvert -> firstConvert.split(",")[1], secondConvert -> Integer.parseInt(secondConvert) + 77);
-
     }
 
     public static void change(String string, Function<String, String> fun1, Function<String, Integer> fun2) {

@@ -43,9 +43,12 @@ public class MyHashMap<K, V> {
         }
 
         public final boolean equals(Object o) {
-            if (o == this) return true;
+            if (o == this) {
+                return true;
+            }
 
-            return o instanceof Map.Entry<?, ?>  && Objects.equals(key, ((Map.Entry<?, ?>) o).getKey()) && Objects.equals(value, ((Map.Entry<?, ?>) o).getValue());
+            return o instanceof Map.Entry<?, ?> && Objects.equals(key, ((Map.Entry<?, ?>) o).getKey()) &&
+                Objects.equals(value, ((Map.Entry<?, ?>) o).getValue());
         }
     }
 
@@ -65,7 +68,7 @@ public class MyHashMap<K, V> {
     final int hash(Object key) { //返回hashcode
         int h;
         return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16); //异或运算，右移16位是因为它会获得一个17位的hashcode，
-                                                                        // 移了16位后原数值只剩1位可能不为0的数参与异或
+        // 移了16位后原数值只剩1位可能不为0的数参与异或
     }
 
     public int size() {
@@ -104,7 +107,9 @@ public class MyHashMap<K, V> {
             }
             if (e != null) {    //如果键相同，跳转到这里，重新赋值
                 V oldValue = e.value;
-                if (!onlyIfAbsent || oldValue == null) e.value = value;
+                if (!onlyIfAbsent || oldValue == null) {
+                    e.value = value;
+                }
                 return oldValue;
             }
         }

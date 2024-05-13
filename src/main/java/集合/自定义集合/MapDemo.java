@@ -23,10 +23,11 @@ public class MapDemo {
         System.out.println("tale_length = " + table.length);
         for (int i = 0; i < table.length; i++) {
             if (table[i] != null) {
-                System.out.println("table[" + i + "] = " + table[i]+"--hash:"+table[i].hash+"--hashcode:"+table[i].getKey().hashCode());
+                System.out.println(
+                    "table[" + i + "] = " + table[i] + "--hash:" + table[i].hash + "--hashcode:" + table[i].getKey().hashCode());
                 MyHashMap.Node<String, String> node = table[i].next;
                 while (node != null) {
-                    System.out.println(" -----> " + node+"--hash:"+node.hash+"--hashcode:"+node.getKey().hashCode());
+                    System.out.println(" -----> " + node + "--hash:" + node.hash + "--hashcode:" + node.getKey().hashCode());
                     node = node.next;
                 }
             }
